@@ -1,6 +1,7 @@
 package com.todotomo.todotomo.domain.task;
 
 import com.todotomo.todotomo.domain.TimeEntity;
+import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import javax.persistence.*;
 
+@ApiModel
 @Getter
 @NoArgsConstructor
 @Entity
@@ -20,24 +22,25 @@ public class Task extends TimeEntity {
     @Column(columnDefinition = "TEXT", nullable=false)
     private String content;
 
-    @Column()
-    private Boolean done;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TaskState state;
 
     @Builder
-    public Task(String content, Boolean done){
+    public Task(String content, TaskState state){
         this.content = content;
-        this.done = done;
+        this.state = state;
     }
 
-    public void update(String content, Boolean done){
+    public void update(String content, String state){
         if(content!=null) this.content = content;
-        if(done!=null) this.done = done;
+        if(state!=null) this.state = TaskState.convert(state);
     }
 
     public String getContent() {
         return content;
     }
-    public Boolean isDone() {
-        return done;
+    public TaskState getState() {
+        return state;
     }
 }

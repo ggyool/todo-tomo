@@ -20,15 +20,17 @@ class TaskRepositoryTests {
     @Test
     public void save(){
         String content = "dummy content";
-        boolean done = false;
+        TaskState state = TaskState.DOING;
 
         for(int i=0; i<5; ++i){
             taskRepository.save(Task.builder().
-                    content(content+i).done(done).build());
+                    content(content+i).state(state).build());
         }
-        List<Task> tasks = taskRepository.findAllAsc();
+        List<Task> tasks = taskRepository.findSatisfiedList(TasksType.ALL, OrderType.ASC);
         for(Task task : tasks){
-            System.out.println(task.getContent() + "   " + task.isDone());
+            System.out.println(task.getContent() + "   " + task.getState());
         }
     }
+
+
 }

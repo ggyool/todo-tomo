@@ -1,5 +1,6 @@
 package com.todotomo.todotomo;
 
+import com.todotomo.todotomo.domain.task.TaskState;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
