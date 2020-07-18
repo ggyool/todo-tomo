@@ -1,5 +1,7 @@
 package com.todotomo.todotomo.dto;
 
+import com.todotomo.todotomo.domain.task.Task;
+import com.todotomo.todotomo.domain.task.TaskState;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -16,6 +18,9 @@ public class TaskSaveRequestDto {
         this.content = content;
     }
 
+    public Task toEntity(){
+        return Task.builder().content(content).state(TaskState.DOING).build();
+    }
     public String getContent() {
         return content;
     }

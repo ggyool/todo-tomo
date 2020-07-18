@@ -22,7 +22,7 @@ public class Task extends TimeEntity {
     @Column(columnDefinition = "TEXT", nullable=false)
     private String content;
 
-    @Column(nullable = false)
+    @Column(nullable = false)// , columnDefinition = "varchar(255) default 'DOING'")
     @Enumerated(EnumType.STRING)
     private TaskState state;
 
@@ -32,9 +32,9 @@ public class Task extends TimeEntity {
         this.state = state;
     }
 
-    public void update(String content, String state){
-        if(content!=null) this.content = content;
-        if(state!=null) this.state = TaskState.convert(state);
+    public void update(String content, TaskState state){
+        this.content = content;
+        this.state = state;
     }
 
     public String getContent() {
