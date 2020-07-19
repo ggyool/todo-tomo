@@ -34,7 +34,7 @@ public class UserController {
         String name = user.getName();
         String password = user.getPassword();
         User saveUser = userService.save(email, name, password);
-        String url = "/api/v1/users/" + saveUser.getId();
+        String url = "/users/" + saveUser.getId();
         return ResponseEntity.created(new URI(url)).body("{}");
     }
 

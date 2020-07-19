@@ -1,6 +1,8 @@
 package com.todotomo.todotomo.controller.api;
 
 import com.todotomo.todotomo.domain.task.TaskState;
+import com.todotomo.todotomo.domain.user.User;
+import com.todotomo.todotomo.domain.user.UserRepository;
 import com.todotomo.todotomo.dto.TaskUpdateRequestDto;
 import com.todotomo.todotomo.dto.TaskSaveRequestDto;
 import org.junit.jupiter.api.Test;
@@ -17,22 +19,28 @@ class TaskApiControllerTests {
 
     @Autowired
     TaskApiController taskApiController;
+//    @Autowired
+//    UserRepository userRepository;
 
     @Test
     public void updateTest(){
         String content = "before content";
-        Long id = taskApiController.save(TaskSaveRequestDto.builder().content(content).build());
+//        User user =userRepository.findByEmail("bbb@bbb.com").orElse(null);
+//        System.out.println(user.getEmail());
+//        System.out.println(user.getRole().getAuthority());
 
-        String updateContent = "after content";
-        TaskState updateState = TaskState.DOING;
-        TaskUpdateRequestDto taskUpdateRequestDto = TaskUpdateRequestDto.builder()
-                .content(updateContent)
-                .state(updateState)
-                .build();
-        taskApiController.update(id, taskUpdateRequestDto);
-
-        assertThat(taskApiController.findById(id).getContent().equals(updateContent));
-        assertThat(taskApiController.findById(id).getState().equals(updateState));
+//        Long id = taskApiController.save(TaskSaveRequestDto.builder().content(content).build());
+//
+//        String updateContent = "after content";
+//        TaskState updateState = TaskState.DOING;
+//        TaskUpdateRequestDto taskUpdateRequestDto = TaskUpdateRequestDto.builder()
+//                .content(updateContent)
+//                .state(updateState)
+//                .build();
+//        taskApiController.update(id, taskUpdateRequestDto);
+//
+//        assertThat(taskApiController.findById(id).getContent().equals(updateContent));
+//        assertThat(taskApiController.findById(id).getState().equals(updateState));
     }
 
 

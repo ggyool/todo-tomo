@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,7 +39,8 @@ public class TaskApiController {
     @ApiOperation(value="할 일을 목록에 저장합니다.")
     @ApiResponse(code = 500, message = "해당 id가 존재하지 않습니다.")
     @PostMapping
-    public Long save(@RequestBody TaskSaveRequestDto tasksSaveRequestDto){
+    public Long save(Authentication authentication, @RequestBody TaskSaveRequestDto tasksSaveRequestDto){
+        System.out.println(authentication);
         return taskService.save(tasksSaveRequestDto);
     }
 
