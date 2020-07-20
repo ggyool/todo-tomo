@@ -24,16 +24,6 @@ public class UserApiController {
 
     private final UserService userService;
 
-    @PostMapping
-    public ResponseEntity<?> save(@RequestBody User user) throws URISyntaxException {
-        String email = user.getEmail();
-        String name = user.getName();
-        String password = user.getPassword();
-        User saveUser = userService.save(email, name, password);
-        String url = "/api/users/" + saveUser.getId();
-        return ResponseEntity.created(new URI(url)).body("{}");
-    }
-
     @GetMapping
     public UserResponseDto find(Authentication authentication){
         Claims claims = (Claims)authentication.getPrincipal();
