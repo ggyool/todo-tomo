@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface TaskCustomRepository {
-    public List<Task> findSatisfiedList(TasksType tasksType, OrderType orderType);
+    public List<Task> findSatisfiedList(TasksType tasksType, OrderType orderType, Long userId);
 }

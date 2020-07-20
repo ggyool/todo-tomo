@@ -26,7 +26,7 @@ class TaskRepositoryTests {
             taskRepository.save(Task.builder().
                     content(content+i).state(state).build());
         }
-        List<Task> tasks = taskRepository.findSatisfiedList(TasksType.ALL, OrderType.ASC);
+        List<Task> tasks = taskRepository.findSatisfiedList(TasksType.ALL, OrderType.ASC, 3L);
         for(Task task : tasks){
             System.out.println(task.getContent() + "   " + task.getState());
         }

@@ -1,6 +1,7 @@
 package com.todotomo.todotomo.domain.task;
 
 import com.todotomo.todotomo.domain.TimeEntity;
+import com.todotomo.todotomo.domain.user.User;
 import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +11,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import javax.persistence.*;
 
 @ApiModel
-@Getter
 @NoArgsConstructor
 @Entity
 public class Task extends TimeEntity {
@@ -26,20 +26,36 @@ public class Task extends TimeEntity {
     @Enumerated(EnumType.STRING)
     private TaskState state;
 
+    //@Column(nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private User user;
+
     @Builder
-    public Task(String content, TaskState state){
+    public Task(String content, TaskState state, User user){
         this.content = content;
         this.state = state;
+        this.user = user;
     }
 
     public void update(String content, TaskState state){
-        this.content = content;
-        this.state = state;
+        if(content!=null) this.content = content;
+        if(state!=null) this.state = state;
+    }
+
+    // 안 만드는 방법 없을까
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getContent() {
         return content;
     }
+
     public TaskState getState() {
         return state;
     }

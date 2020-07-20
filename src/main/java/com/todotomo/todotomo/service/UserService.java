@@ -19,11 +19,16 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    private final  UserRepository userRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     public List<User> findAll(){
         return userRepository.findAll();
+    }
+
+    public User findById(Long id){
+        return userRepository.findById(id)
+                .orElseThrow(()->new IllegalArgumentException("해당 id가 없습니다. id:" + id));
     }
 
     public User save(String email, String name, String password){

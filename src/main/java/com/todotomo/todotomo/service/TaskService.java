@@ -5,6 +5,8 @@ import com.todotomo.todotomo.domain.task.TaskRepository;
 import com.todotomo.todotomo.domain.task.TaskState;
 import com.todotomo.todotomo.domain.task.OrderType;
 import com.todotomo.todotomo.domain.task.TasksType;
+import com.todotomo.todotomo.domain.user.User;
+import com.todotomo.todotomo.domain.user.UserRepository;
 import com.todotomo.todotomo.dto.TaskSaveRequestDto;
 import com.todotomo.todotomo.dto.TaskUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -19,24 +21,20 @@ import java.util.List;
 public class TaskService {
 
     private final TaskRepository taskRepository;
+    private final UserRepository userRepository;
 
-    public Long save(TaskSaveRequestDto taskSaveRequestDto){
-//        if(content==null){
-//            throw new IllegalArgumentException("잘못된 값이 입력되었습니다.");
-//        }
-        Task task = taskSaveRequestDto.toEntity();
+    public Long save(TaskSaveRequestDto taskSaveRequestDto, Long userId){
+        User user = userRepository.findById(userId)
+                .orElseThrow(()-> new IllegalArgumentException("해당 user가 없습니다. userId:" + userId));
+        Task task = taskSaveRequestDto.toEntity(user);
         return taskRepository.save(task).getId();
     }
 
     public Long update(Long id, TaskUpdateRequestDto taskUpdateRequestDto){
         String content = taskUpdateRequestDto.getContent();
         TaskState state = taskUpdateRequestDto.getState();
-//        if(content==null && state==null){
-//            throw new IllegalArgumentException("값을 입력하지 않았습니다.");
-//        }
-//        if(!TaskState.checkValidate(state)){
-//            throw new IllegalArgumentException("존재하지 않는 state입니다.");
-//        }
+        if(content==null && state==null)
+            throw new IllegalArgumentException("잘못된 입력입니다.");
         Task task = taskRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("해당 id가 없습니다. id:" + id));
         task.update(content, state);
@@ -50,15 +48,9 @@ public class TaskService {
     }
 
 
-    public List<Task> findSatisfiedList(String tasksType, String orderType){
-//        if(!TasksType.checkValidate(tasksType)){
-//            throw new IllegalArgumentException("존재하지 않는 항목들의 타입입니다.");
-//        }
-//        if(!OrderType.checkValidate(orderType)){
-//            throw new IllegalArgumentException("존재하지 않는 정렬방식 입니다.");
-//        }
+    public List<Task> findSatisfiedList(String tasksType, String orderType, Long userId){
         return taskRepository.findSatisfiedList(TasksType.convert(tasksType),
-                OrderType.convert(orderType));
+                OrderType.convert(orderType), userId);
     }
 
     public void delete(Long id){
