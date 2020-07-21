@@ -13,6 +13,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 @RequestMapping(path="/session")
 @RestController
 public class SessionController {

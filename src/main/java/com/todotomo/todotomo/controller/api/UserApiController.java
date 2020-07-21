@@ -2,19 +2,14 @@ package com.todotomo.todotomo.controller.api;
 
 import com.todotomo.todotomo.domain.user.User;
 import com.todotomo.todotomo.dto.UserResponseDto;
-import com.todotomo.todotomo.service.CustomUserDetailService;
 import com.todotomo.todotomo.service.UserService;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
-import java.net.URISyntaxException;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
