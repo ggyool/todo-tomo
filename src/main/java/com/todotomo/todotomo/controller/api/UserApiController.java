@@ -22,7 +22,7 @@ public class UserApiController {
     private final UserService userService;
 
     @GetMapping
-    @ApiOperation(value="유저정보 가져오기")
+    @ApiOperation(value="유저정보 가져오기 (token)")
     public UserResponseDto find(Authentication authentication){
         Claims claims = (Claims)authentication.getPrincipal();
         Long id = claims.get("id", Long.class);
@@ -34,7 +34,7 @@ public class UserApiController {
     }
 
     @PostMapping
-    @ApiOperation(value="유저 생성")
+    @ApiOperation(value="유저 생성 (email, name, paassword)")
     public ResponseEntity<?> save(@RequestBody User user) throws URISyntaxException {
         String email = user.getEmail();
         String name = user.getName();

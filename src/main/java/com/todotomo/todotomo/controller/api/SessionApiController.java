@@ -5,6 +5,7 @@ import com.todotomo.todotomo.dto.SessionRequestDto;
 import com.todotomo.todotomo.dto.SessionResponseDto;
 import com.todotomo.todotomo.security.jwt.JwtFactory;
 import com.todotomo.todotomo.service.UserService;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class SessionApiController {
     private final UserService userService;
     private final JwtFactory jwtFactory;
 
+    @ApiOperation(value="토큰 받아오기 (email, paassword)")
     @PostMapping
     public ResponseEntity<SessionResponseDto> save(
             @RequestBody SessionRequestDto sessionRequestDto
