@@ -21,12 +21,11 @@ public class SwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.ant("/api/**"))
-                .paths(PathSelectors.ant("/session"))
-                .paths(PathSelectors.ant("/user"))
                 .build()
                 .apiInfo(apiInfo())
                 .useDefaultResponseMessages(false);
     }
+
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()

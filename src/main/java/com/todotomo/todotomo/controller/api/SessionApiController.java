@@ -1,4 +1,4 @@
-package com.todotomo.todotomo.controller;
+package com.todotomo.todotomo.controller.api;
 
 import com.todotomo.todotomo.domain.user.User;
 import com.todotomo.todotomo.dto.SessionRequestDto;
@@ -14,9 +14,9 @@ import java.net.URISyntaxException;
 
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
-@RequestMapping(path="/session")
+@RequestMapping(path="/api/session")
 @RestController
-public class SessionController {
+public class SessionApiController {
 
     private final UserService userService;
     private final JwtFactory jwtFactory;
@@ -31,10 +31,9 @@ public class SessionController {
         String password = sessionRequestDto.getPassword();
         User user = userService.authenticate(email, password);
 
-        String url = "/session";
+        String url = "/api/session";
         String accessToken = jwtFactory.generateToken(user.getId(), user.getName());
         SessionResponseDto sessionResponseDto = SessionResponseDto.builder().accessToken(accessToken).build();
         return ResponseEntity.created(new URI(url)).body(sessionResponseDto);
     }
-
 }
