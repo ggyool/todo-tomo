@@ -1,19 +1,17 @@
 package com.todotomo.todotomo.controller.api;
 
-import com.todotomo.todotomo.domain.task.OrderType;
 import com.todotomo.todotomo.domain.task.Task;
-import com.todotomo.todotomo.domain.task.TasksType;
-import com.todotomo.todotomo.dto.TaskUpdateRequestDto;
 import com.todotomo.todotomo.dto.TaskSaveRequestDto;
+import com.todotomo.todotomo.dto.TaskUpdateRequestDto;
 import com.todotomo.todotomo.service.TaskService;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.criterion.Order;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
@@ -27,7 +25,7 @@ public class TaskApiController {
 
     @ApiOperation(value="조건에 맞는 항목을 생성일을 기준으로 정렬하여 가져옵니다.")
     @GetMapping
-    public List<Task> findSatisfiedList(Authentication authentication,
+    public List<Task> findSatisfiedList(@ApiIgnore Authentication authentication,
                                         @ApiParam(value="all, doing, done", required = false)
                                         @RequestParam(value="tasksType", required=false, defaultValue="all") String tasksType,
                                         @ApiParam(value="asc, desc", required = false)
@@ -37,19 +35,19 @@ public class TaskApiController {
         return taskService.findSatisfiedList(tasksType, orderType, userId);
     }
 
+    @ApiOperation(value="할 일을 목록에 저장합니다.")
+    @ApiResponse(code = 500, message = "해당 id가 존재하지 않습니다.")
+    @PostMapping
+    public Long save(@ApiIgnore Authentication authentication, @RequestBody TaskSaveRequestDto tasksSaveRequestDto){
+        Claims claims = (Claims)authentication.getPrincipal();
+        Long userId = claims.get("id", Long.class);
+        return taskService.save(tasksSaveRequestDto, userId);
+    }
+
     @ApiOperation(value="id 값을 이용하여 항목 하나를 가져옵니다.")
     @GetMapping("/{id}")
     public Task findById(@PathVariable Long id){
         return taskService.findById(id);
-    }
-
-    @ApiOperation(value="할 일을 목록에 저장합니다.")
-    @ApiResponse(code = 500, message = "해당 id가 존재하지 않습니다.")
-    @PostMapping
-    public Long save(Authentication authentication, @RequestBody TaskSaveRequestDto tasksSaveRequestDto){
-        Claims claims = (Claims)authentication.getPrincipal();
-        Long userId = claims.get("id", Long.class);
-        return taskService.save(tasksSaveRequestDto, userId);
     }
 
     @ApiOperation(value="id 값을 이용하여 항목을 수정합니다.")

@@ -1,2 +1,3 @@
 TODOs for TOMOrrow
-Simple todo-list project
+
+Simple todo-list api
